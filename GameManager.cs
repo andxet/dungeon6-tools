@@ -36,7 +36,7 @@ namespace Dungeon6
                 else
                     name += GeneralData.ConsonantsDictionary[RollDice6() - 1, RollDice6() - 1];
             }
-            return name;
+            return char.ToUpper(name[0]) + name.Substring(1);
         }
     }
 }
