@@ -14,11 +14,13 @@ namespace Dungeon6tools
         [STAThread]
         static void Main()
         {
+            Console.WriteLine(GeneralData.GetGameNameAndVersion());
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Form1());
 
             GameManager gm = new GameManager();
+
             //for (int i = 0; i < 20; i++)
             //    Console.WriteLine(gm.RollDice6());
 

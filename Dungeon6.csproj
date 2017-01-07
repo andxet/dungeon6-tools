@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Character.cs" />
     <Compile Include="CharacterClass.cs" />
+    <Compile Include="Creature.cs" />
     <Compile Include="Wizard.cs" />
     <Compile Include="GeneralData.cs" />
     <Compile Include="GameManager.cs" />

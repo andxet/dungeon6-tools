@@ -11,6 +11,9 @@ namespace Dungeon6tools
 
     public class GeneralData
     {
+        public static string GameDescription = "Dungeon 6";
+        public static string GameVersion = "3.0";
+
         public static Dictionary<PGClasses, CharacterClass> CharacterClasses { get; private set; }        
 
         public static string[] DungeonName =
@@ -42,6 +45,11 @@ namespace Dungeon6tools
             'u',
             'y'
         };
+
+        public static string GetGameNameAndVersion()
+        {
+            return GameDescription + " version " + GameVersion;
+        }
 
         static GeneralData gd = new GeneralData();
         private GeneralData()

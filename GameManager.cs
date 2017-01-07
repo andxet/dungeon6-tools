@@ -5,15 +5,16 @@ namespace Dungeon6tools
 {
     public class GameManager
     {
-        public static string GameDescription = "Dungeon 6";
-        public static string GameVersion = "3.0";
+        public string DungeonName { get; private set; }
 
         Random random;
 
         public GameManager()
         {
             random = new Random();
-        }
+            DungeonName = GeneralData.DungeonName[RollDice6()] + GenerateName();
+            Console.WriteLine("Created a new dungeon with name " + DungeonName + "!");
+        }        
 
         public int RollDice6()
         {
@@ -26,7 +27,7 @@ namespace Dungeon6tools
             int nameLength = RollDice6() + 2;
             Debug.WriteLine("Generating name with lenght " + nameLength);
             int vocalsGenerated = 0;
-            if(nameLength % 2 == 0)
+            if (nameLength % 2 == 0)
             {
                 name += GeneralData.VocalsDictionary[RollDice6() - 1];
                 nameLength--;
