@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Dungeon6
+namespace Dungeon6tools
 {
     public class GameManager
     {
+        public static string GameDescription = "Dungeon 6";
+        public static string GameVersion = "3.0";
+
         Random random;
 
         public GameManager()

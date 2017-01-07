@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Dungeon6;
+using Dungeon6tools;
 
 namespace UnitTest
 {

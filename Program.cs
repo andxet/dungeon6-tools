@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Dungeon6
+namespace Dungeon6tools
 {
     static class Program
     {
@@ -19,11 +19,15 @@ namespace Dungeon6
             //Application.Run(new Form1());
 
             GameManager gm = new GameManager();
-            for (int i = 0; i < 20; i++)
-                Console.WriteLine(gm.RollDice6());
+            //for (int i = 0; i < 20; i++)
+            //    Console.WriteLine(gm.RollDice6());
 
-            for (int i = 0; i < 20; i++)
-                Console.WriteLine(gm.GenerateName());
+            //for (int i = 0; i < 20; i++)
+            //    Console.WriteLine(gm.GenerateName());
+
+            Character wizard = new Character(gm, PGClasses.WIZARD);
+            wizard.AddExp(135);
+            Character warrior = new Character(gm, PGClasses.WARRIOR);
         }
     }
 }

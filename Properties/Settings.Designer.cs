@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Dungeon6.Properties
+namespace Dungeon6tools.Properties
 {
 
 
