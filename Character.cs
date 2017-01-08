@@ -6,6 +6,25 @@ using System.Threading.Tasks;
 
 namespace Dungeon6tools
 {
+    public class CharacterClass
+    {
+        public string ClassName { get; }
+        public string ClassDescription { get; }
+        public List<LevelImprovement> LevelImprovements { get; }
+        public List<Ability> Abilities { get; }
+
+        //Initial objets
+        //TODO
+
+        public CharacterClass(string name, string description, List<LevelImprovement> levelImprovements, List<Ability> abilityList)
+        {
+            this.ClassName = name;
+            this.ClassDescription = description;
+            this.LevelImprovements = levelImprovements;
+            this.Abilities = abilityList;
+        }
+    }
+
     public class Ability
     {
         string Name { get; }
@@ -20,52 +39,25 @@ namespace Dungeon6tools
         }
     }
 
-    public class LevelImprovement
+    public class LevelImprovement : PropertiesModifier
     {
         public int ExperienceNeeded { get; }
-        public int EnergyIncrement { get; }
-        public int HPIIncrement { get; }
-        public int AttackIncrement { get; }
-        public int DefenseIncrement { get; }
-        public int TalentIncrement { get; }
-        public int DamageIncrement { get; }
 
-        public LevelImprovement(int ExperienceNeeded, int EnergyIncrement, int HPIIncrement, int AttackIncrement, int DefenseIncrement, int TalentIncrement, int DamageIncrement)
+        public LevelImprovement(int ExperienceNeeded, int EnergyIncrement, int HPIIncrement, int AttackIncrement, int DefenseIncrement, int TalentIncrement, int DamageIncrement) : base(EnergyIncrement, HPIIncrement, AttackIncrement, DefenseIncrement, TalentIncrement, DamageIncrement)
         {
             this.ExperienceNeeded = ExperienceNeeded;
-            this.EnergyIncrement = EnergyIncrement;
-            this.HPIIncrement = HPIIncrement;
-            this.AttackIncrement = AttackIncrement;
-            this.DefenseIncrement = DefenseIncrement;
-            this.TalentIncrement = TalentIncrement;
-            this.DamageIncrement = DamageIncrement;
         }
     }
 
-    public class Character
+    public class Character : Actor
     {
-        protected GameManager manager;
-
         public PGClasses Class { get; private set; }
-
-        protected string Name { get; private set; }
-        protected int Level { get; private set; }
-        protected int Experience { get; private set; }
-        protected int Energy { get; private set; }
-        protected int HP { get; private set; }
-        protected int Attack { get; private set; }
-        protected int Defense { get; private set; }
-        protected int Talent { get; private set; }
-        protected int Damage { get; private set; }
-        protected int Movement { get; private set; }
-
-        //Inventory
-        //TODO
-
         protected List<LevelImprovement> LevelImprovements { get; private set; }
         protected List<Ability> Abilities { get; private set; }
         public string ClassName { get; private set; }
         public string ClassDescription { get; private set; }
+        protected int Experience { get; set; }
+        protected int Level { get; set; }
 
         /// <summary>
         /// Constructor of the Character class
@@ -73,9 +65,8 @@ namespace Dungeon6tools
         /// <param name="gm">The game manager</param>
         /// <param name="pgClass">The class of the pg you want to create</param>
         /// <param name="Name">The name of the pg. Leave to null to enerate it</param>
-        public Character(GameManager gm, PGClasses pgClass, string Name = null)
+        public Character(GameManager gm, PGClasses pgClass, string Name = null) : base(gm)
         {
-            this.manager = gm;
             CharacterClass classToAssign;
             GeneralData.CharacterClasses.TryGetValue(pgClass, out classToAssign);
             if (classToAssign == null)
@@ -91,28 +82,14 @@ namespace Dungeon6tools
 
             //Set the first level parameters
             LevelImprovement level = LevelImprovements.ElementAt(0);
-            this.Energy += level.EnergyIncrement;
-            this.HP += level.HPIIncrement;
-            this.Attack += level.AttackIncrement;
-            this.Defense += level.DefenseIncrement;
-            this.Talent += level.TalentIncrement;
-            this.Damage += level.DamageIncrement;
+            this.Energy += level.EnergyModifier;
+            this.HP += level.HPModifier;
+            this.Attack += level.AttackModifier;
+            this.Defense += level.DefenseModifier;
+            this.Talent += level.TalentModifier;
+            this.Damage += level.DamageModifier;
 
             Console.WriteLine("Creating new character " + Name + " with class " + pgClass.ToString());
-        }
-
-        /// <summary>
-        /// Apply the level modification to this character. It not manage the logic of already applied levels or unapplied levels.
-        /// </summary>
-        /// <param name="level">The level improvements to apply</param>
-        protected void ApplyLevelImprovements(LevelImprovement level)
-        {
-            this.Energy += level.EnergyIncrement;
-            this.HP += level.HPIIncrement;
-            this.Attack += level.AttackIncrement;
-            this.Defense += level.DefenseIncrement;
-            this.Talent += level.TalentIncrement;
-            this.Damage += level.DamageIncrement;
         }
 
         /// <summary>
@@ -122,10 +99,10 @@ namespace Dungeon6tools
         public void AddExp(int exp)
         {
             Experience += exp;
-            while(Level < LevelImprovements.Count - 1 && Experience >= LevelImprovements.ElementAt(Level + 1).ExperienceNeeded)
+            while (Level < LevelImprovements.Count - 1 && Experience >= LevelImprovements.ElementAt(Level + 1).ExperienceNeeded)
             {
                 LevelImprovement nextLevel = LevelImprovements.ElementAt(Level + 1);
-                ApplyLevelImprovements(nextLevel);
+                ApplyPropertiesModifier(nextLevel);
                 Level++;
                 Console.WriteLine("Character " + Name + " " + Class.ToString() + " has reached level " + (Level + 1) + "!");
             }

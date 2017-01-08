@@ -7,14 +7,26 @@ using System.Threading.Tasks;
 
 namespace Dungeon6tools
 {
+    //PG
     public enum PGClasses { WIZARD, WARRIOR, THIEF, CLERIC };
+
+    //Creatures
+    public enum CreatureType { COMMON, GENERAL, GUARDIAN, BOSS };
+
 
     public class GeneralData
     {
         public static string GameDescription = "Dungeon 6";
         public static string GameVersion = "3.0";
 
-        public static Dictionary<PGClasses, CharacterClass> CharacterClasses { get; private set; }        
+        public static Dictionary<PGClasses, CharacterClass> CharacterClasses { get; private set; }
+        public static List<CreatureTactic> MonstersTactics { get; private set; }
+        public static List<CreatureNature> CreatureNatureList { get; private set; }
+        public static List<CreatureTonnage> CreatureTonnageList { get; private set; }
+        public static List<string> CreatureColorList { get; private set; }
+        public static List<int> CreatureCaseList { get; private set; }
+        public static List<CreaturePower> CreatureMinorPowers { get; private set; }
+        public static List<CreaturePower> CreatureMajorPowers { get; private set; }
 
         public static string[] DungeonName =
         {
@@ -55,7 +67,6 @@ namespace Dungeon6tools
         private GeneralData()
         {
             CharacterClasses = new Dictionary<PGClasses, CharacterClass>();
-
             {//Wizard
                 string name = "Mago";
                 string description = "Sei il personaggio saggio e dotato di poteri misteriosi. Attraverso la tua conoscenza puoi evocare poteri meravigliosi e terribili.";
@@ -83,7 +94,7 @@ namespace Dungeon6tools
                 Abilities.Add(new Ability("Tempesta", new string[] { "6C", "5D", "F" }, "Tutte le creature entro 5 quadretti dal mago subiscono 2d6 danni da fulmini e fuoco."));
                 Abilities.Add(new Ability("Varcare i Cancelli del Vuoto", new string[] { "5C", "0D" }, "Il mago e tutto ciò che porta, può spostarsi in un qualsiasi punto già disegnato della mappa."));
                 Abilities.Add(new Ability("Dominazione", new string[] { "7C", "3D", "M" }, "La creatura è sotto gli ordini del mago per 3 turni. L'unico ordine che non eseguirà è quello di suicidarsi. Non influenza il Signore del Sotterraneo."));
-                
+
                 //Todo: inventory
 
                 CharacterClass wizard = new CharacterClass(name, description, LevelImprovements, Abilities);
@@ -98,6 +109,31 @@ namespace Dungeon6tools
             {//Cleric
 
             }
+
+            //Creature nature
+
+            //Creature tonnage
+
+            //Creature color
+            CreatureColorList = new List<string>
+            {
+                "bianca",
+                "verde",
+                "trasparente",
+                "nera",
+                "rossa",
+                "blu"
+            };
+
+            CreatureCaseList = new List<int>
+            {
+                -1,
+                -1,
+                0,
+                0,
+                1,
+                1
+            };
         }
     }
 }
